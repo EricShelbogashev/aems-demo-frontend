@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import ElementDetail from "@/components/ElementDetail.vue";
 
 const routes = [
   {
@@ -14,6 +15,12 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: '',
+        name: 'ElementDetail',
+        component: ElementDetail,
+        props: true
+      }
     ],
   },
 ]

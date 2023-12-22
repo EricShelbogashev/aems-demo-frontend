@@ -1,7 +1,8 @@
 <template>
-  <HelloWorld />
+  <h1>Элементы</h1>
+  <ElementsList></ElementsList>
 </template>
 
 <script lang="ts" setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+import ElementsList from "@/components/ElementList.vue";
 </script>
