@@ -30,11 +30,27 @@
     </v-snackbar>
 
     <!-- New table for displaying usages -->
-    <v-data-table
-      :headers="headers"
-      :items="usages"
-      class="elevation-1"
-    ></v-data-table>
+    <v-data-table :headers="headers" :items="usages" class="elevation-1">
+      <template v-slot:item="slotProps">
+        <tr>
+          <td>{{ slotProps.item.usageId }}</td>
+          <td>{{ slotProps.item.reagentId }}</td>
+          <td>{{ slotProps.item.journalEntryResponseDto ? slotProps.item.journalEntryResponseDto.title : '' }}</td>
+          <td>{{ slotProps.item.journalEntryResponseDto ? slotProps.item.journalEntryResponseDto.createdAt : '' }}</td>
+          <td>{{ slotProps.item.journalEntryResponseDto ? slotProps.item.journalEntryResponseDto.updatedAt : '' }}</td>
+          <td>{{ slotProps.item.reason }}</td>
+          <td>{{ slotProps.item.quantity }}</td>
+          <td>{{ slotProps.item.unit }}</td>
+          <td>{{ slotProps.item.createdAt }}</td>
+          <td>
+            <v-btn color="error" @click="deleteUsageEntry(item.usageId)">Delete</v-btn>
+          </td>
+        </tr>
+      </template>
+
+
+    </v-data-table>
+
 
     <!-- Add Usage Dialog -->
     <v-dialog v-model="showAddUsageDialog" max-width="500px">
@@ -64,12 +80,27 @@ import {ref, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {
   addReagentUsageEntry,
-  deleteJournalEntry,
+  deleteJournalEntry, deleteReagentUsageEntry,
   getAllReagents,
   getJournalContent, ReagentDataResponse,
   updateJournalText
 } from "@/WebClient";
 import ReagentSelect from "@/components/ReagentSelect.vue";
+
+export interface UsageData {
+  usageId: number;
+  reagentId: number;
+  journalEntryResponseDto: {
+    id: number;
+    title: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  reason: string;
+  quantity: number;
+  unit: string;
+  createdAt: string;
+}
 
 export default {
   name: 'JournalEdit',
@@ -135,7 +166,7 @@ export default {
       {text: 'Unit', value: 'unit'},
       {text: 'Created At', value: 'createdAt'},
     ];
-    const usages = ref([]);
+    const usages = ref<UsageData[]>([]);
 
     const saveJournalText = async () => {
       try {
@@ -240,7 +271,20 @@ export default {
         }
       }
     };
-
+// Function to delete a reagent usage entry
+    const deleteUsageEntry = async (usageId: number) => {
+      try {
+        await deleteReagentUsageEntry(props.journalId, usageId);
+        await fetchJournalContent(); // Refresh content
+        showSuccessSnackbar.value = true;
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Error deleting reagent usage entry:', error);
+          errorMessage.value = error.message;
+          showErrorSnackbar.value = true;
+        }
+      }
+    };
     return {
       journalText,
       textRules,
@@ -256,6 +300,7 @@ export default {
       units,
       reasons,
       submitUsage,
+      deleteUsageEntry,
     };
   }
   ,
