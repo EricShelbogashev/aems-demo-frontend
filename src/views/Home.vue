@@ -1,7 +1,7 @@
 <template>
-  <HelloWorld />
+  <TestApi />
 </template>
 
 <script lang="ts" setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import TestApi from '@/components/TestApi.vue'
 </script>
