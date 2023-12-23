@@ -43,7 +43,7 @@
           <td>{{ slotProps.item.unit }}</td>
           <td>{{ slotProps.item.createdAt }}</td>
           <td>
-            <v-btn color="error" @click="deleteUsageEntry(item.usageId)">Delete</v-btn>
+            <v-btn color="error" @click="deleteUsageEntry(slotProps.item.usageId)">Delete</v-btn>
           </td>
         </tr>
       </template>
