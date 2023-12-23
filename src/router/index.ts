@@ -1,18 +1,24 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import JournalEdit from '@/components/JournalEdit.vue';
 import Home from '@/views/Home.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'JournalGrid',
     component: Home,
+    props: () => ({ defaultComponent: 'JournalGrid' }),
   },
   {
     path: '/edit-journal/:journalId',
     name: 'JournalEdit',
-    component: JournalEdit,
-    props: true, // Allows the journalId to be passed as a prop
+    component: Home,
+    props: (route) => ({ defaultComponent: 'JournalEdit', journalId: route.params.journalId }),
+  },
+  {
+    path: '/reagent-grid',
+    name: 'ReagentGrid',
+    component: Home,
+    props: () => ({ defaultComponent: 'ReagentGrid' }),
   },
 ];
 
