@@ -12,7 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/edit-journal/:journalId',
     name: 'JournalEdit',
     component: Home,
-    props: (route) => ({ defaultComponent: 'JournalEdit', journalId: route.params.journalId }),
+    // Convert the journalId to a number here
+    props: (route) => ({
+      defaultComponent: 'JournalEdit',
+      journalId: parseInt(route.params.journalId as string, 10),
+    }),
   },
   {
     path: '/reagent-grid',

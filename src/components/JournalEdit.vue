@@ -56,7 +56,7 @@
 
     <!-- Add a button to open the dialog -->
     <v-btn color="secondary" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
-
+    <ReagentSelect/>
   </v-container>
 </template>
 
@@ -70,9 +70,11 @@ import {
   getJournalContent, ReagentDataResponse,
   updateJournalText
 } from "@/WebClient";
+import ReagentSelect from "@/components/ReagentSelect.vue";
 
 export default {
   name: 'JournalEdit',
+  components: {ReagentSelect},
   props: {
     journalId: {
       type: Number,
