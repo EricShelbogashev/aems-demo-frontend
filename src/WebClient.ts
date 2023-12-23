@@ -1,12 +1,23 @@
 import axios, {AxiosResponse} from 'axios';
 
 // Определяем типы для данных реагента и журнала
-interface ReagentData {
+export interface ReagentData {
   name: string;
   latexFormula: string;
   molarWeight: number;
   description: string;
   hazardCategory: string;
+}
+
+export interface ReagentDataResponse {
+  id: number,
+  name: string;
+  latexFormula: string;
+  molarWeight: number;
+  description: string;
+  hazardCategory: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 // Создаем экземпляр axios с базовым URL
 const axiosInstance = axios.create({
@@ -48,15 +59,15 @@ const deleteReagent = async (id: number): Promise<AxiosResponse> => {
   return await axiosInstance.delete(`management/reagents/${id}`);
 };
 
-interface JournalContent {
+export interface JournalContent {
   text: string;
 }
 
-interface UsageData {
-  reagentId: number;
+export interface UsageData {
+  reagentId: number | null;
   journalId: number;
   reason: string;
-  quantity: number;
+  quantity: number | null;
   unit: string;
 }
 
@@ -111,3 +122,4 @@ export {
   deleteReagentUsageEntry,
   deleteJournalEntry,
 };
+
