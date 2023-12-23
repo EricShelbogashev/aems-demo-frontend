@@ -57,6 +57,7 @@
 import {createJournalEntry, getAllJournals, updateJournalEntry} from "@/WebClient";
 
 export default {
+  name: 'JournalGrid',
   data() {
     return {
       journals: [],

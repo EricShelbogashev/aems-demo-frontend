@@ -47,6 +47,7 @@
 import {getAllReagents, createReagent} from '@/WebClient';
 
 export default {
+  name: 'ReagentGrid',
   data() {
     return {
       reagents: [],
