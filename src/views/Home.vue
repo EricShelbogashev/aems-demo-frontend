@@ -28,6 +28,7 @@ import { defineComponent } from 'vue';
 import JournalGrid from '@/components/JournalGrid.vue';
 import ReagentGrid from '@/components/ReagentGrid.vue';
 import JournalEdit from "@/components/JournalEdit.vue";
+import ElementsList from "@/components/ElementList.vue";
 
 export default defineComponent({
   components: {

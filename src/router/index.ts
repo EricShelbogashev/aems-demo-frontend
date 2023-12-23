@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home.vue';
+import ElementDetail from "@/components/ElementDetail.vue";
+import ElementList from "@/components/ElementList.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +26,18 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     props: () => ({ defaultComponent: 'ReagentGrid' }),
   },
+  {
+    path: '/element-list',
+    name: 'ElementList',
+    component: ElementList,
+    props: true
+  },
+  {
+    path: '/element-detail',
+    name: 'ElementDetail',
+    component: ElementDetail,
+    props: true
+  }
 ];
 
 const router = createRouter({
