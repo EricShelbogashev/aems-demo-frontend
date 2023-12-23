@@ -1,26 +1,24 @@
-// Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import JournalEdit from '@/components/JournalEdit.vue';
+import Home from '@/views/Home.vue';
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Home',
-        // route level code-splitting
-        // this generates a separate chunk (Home-[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import('@/views/Home.vue'),
-      },
-    ],
+    name: 'Home',
+    component: Home,
   },
-]
+  {
+    path: '/edit-journal/:journalId',
+    name: 'JournalEdit',
+    component: JournalEdit,
+    props: true, // Allows the journalId to be passed as a prop
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-export default router
+export default router;

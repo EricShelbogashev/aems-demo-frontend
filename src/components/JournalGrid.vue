@@ -14,7 +14,8 @@
             <div>Updated: {{ journal.updatedAt }}</div>
           </v-card-text>
           <v-card-actions>
-            <v-btn text="" color="primary" @click="openEditDialog(journal)">Edit</v-btn>
+            <v-btn text="" color="primary" @click="openEditDialog(journal)">Edit title</v-btn>
+            <v-btn text="" color="primary" @click="editJournal(journal.id)">Edit journal</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -72,6 +73,9 @@ export default {
     await this.fetchJournals();
   },
   methods: {
+    editJournal(journalId) {
+      this.$router.push({ name: 'JournalEdit', params: { journalId } });
+    },
     async fetchJournals() {
       try {
         const response = await getAllJournals();
