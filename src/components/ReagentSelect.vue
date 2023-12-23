@@ -26,10 +26,11 @@
     </v-row>
   </v-container>
 </template>
+
 <script setup lang="js">
 import { ref, computed, onMounted } from 'vue';
 import { VRow, VCol, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components';
-import {getAllReagents} from "@/WebClient";
+import { getAllReagents } from "@/WebClient";
 
 const reagents = ref([]);
 const search = ref('');
@@ -46,11 +47,13 @@ const filteredReagents = computed(() => {
 });
 
 const shouldShowList = computed(() => isFocused.value);
+const emit = defineEmits(['update-reagent-id']); // Define the emit function
 
 const selectReagent = (reagent) => {
-  selectedReagent.value = reagent;
-  search.value = reagent.name; // Update search with the selected reagent name
+  selectedReagent.value = reagent.id;
+  search.value = reagent.name;
   isFocused.value = false;
+  emit('update-reagent-id', reagent.id); // Emit the selected reagent's ID
 };
 
 // Function to fetch reagents from the API

@@ -41,10 +41,10 @@
       <v-card>
         <v-card-title>Add Reagent Usage</v-card-title>
         <v-card-text>
-          <v-text-field v-model="newUsage.reagentId" label="Reagent ID" type="number" outlined></v-text-field>
-          <v-text-field v-model="newUsage.reason" label="Reason" outlined></v-text-field>
-          <v-text-field v-model="newUsage.quantity" label="Quantity" type="number" outlined></v-text-field>
-          <v-select v-model="newUsage.unit" :items="units" label="Unit" outlined></v-select>
+          <ReagentSelect @update-reagent-id="newUsage.reagentId = $event"/>
+          <v-select v-model="newUsage.reason" :items="reasons" label="Reason" variant="outlined"></v-select>
+          <v-text-field v-model="newUsage.quantity" label="Quantity" type="number" variant="outlined"></v-text-field>
+          <v-select v-model="newUsage.unit" :items="units" label="Unit" variant="outlined"></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -56,7 +56,6 @@
 
     <!-- Add a button to open the dialog -->
     <v-btn color="secondary" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
-    <ReagentSelect/>
   </v-container>
 </template>
 
@@ -170,17 +169,56 @@ export default {
       }
     };
 
-
     onMounted(fetchJournalContent);
 
     const showAddUsageDialog = ref(false);
     const newUsage = ref({
-      reagentId: null,
+      reagentId: -1,
       reason: '',
       quantity: null,
       unit: ''
     });
-    const units = ['MILLILITER', 'NANOGRAM', 'NANOMOLE', 'LITER']; // Add other units as needed
+    const units = [
+      'MOLE',
+      'GRAM',
+      'KILOGRAM',
+      'LITER',
+      'MILLILITER',
+      'MICROLITER',
+      'NANOLITER',
+      'MILLIMOLE',
+      'MICROMOLE',
+      'NANOMOLE',
+      'MOLAR',
+      'MILLIGRAM',
+      'MICROGRAM',
+      'NANOGRAM',
+      'PPM',
+      'PPB',
+      'PPT',
+      'MOL_PER_LITER',
+      'G_PER_LITER',
+      'KG_PER_LITER'
+    ];
+
+    const reasons = [
+      'IMPORTED',
+      'SYNTHESIZED',
+      'USED_FOR_SYNTHESIS',
+      'NOT_REGISTERED',
+      'USED_FOR_ANALYSIS',
+      'EXPIRED',
+      'DAMAGED',
+      'LOST',
+      'STOLEN',
+      'USED_FOR_TESTING',
+      'USED_FOR_TEACHING',
+      'RETURNED',
+      'DISPOSED',
+      'SAMPLE_TAKEN',
+      'ACCIDENTAL_SPILL',
+      'QUALITY_CHECK'
+    ];
 
     const submitUsage = async () => {
       try {
@@ -216,8 +254,10 @@ export default {
       showAddUsageDialog,
       newUsage,
       units,
+      reasons,
       submitUsage,
     };
-  },
+  }
+  ,
 };
 </script>
