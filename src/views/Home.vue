@@ -1,7 +1,7 @@
 <template>
-  <TestApi />
+  <JournalGrid />
 </template>
 
 <script lang="ts" setup>
-  import TestApi from '@/components/TestApi.vue'
+  import JournalGrid from "@/components/JournalGrid.vue";
 </script>
