@@ -1,71 +1,70 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="12" md="6">
+    <v-row>
+      <v-col cols="12" sm="6">
         <v-text-field
           v-model="search"
-          label="Search"
-          outlined
+          label="Search Reagents"
+          variant="outlined"
           clearable
           @focus="isFocused = true"
-          solo-inverted
-          hide-details
-          class="elevation-2"
         ></v-text-field>
-        <transition name="fade" mode="out-in">
-          <v-list v-if="shouldShowList" dense class="mt-1">
-            <v-list-item
-              v-for="state in filteredStates"
-              :key="state"
-              @click="selectState(state)"
-              class="state-list-item"
-            >
-              <v-list-item-title>{{ state }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </transition>
+      </v-col>
+    </v-row>
+    <v-row v-if="shouldShowList">
+      <v-col cols="12" sm="6">
+        <v-list>
+          <v-list-item
+            v-for="reagent in filteredReagents"
+            :key="reagent.id"
+            @click="selectReagent(reagent)"
+          >
+            <v-list-item-title>{{ reagent.name }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-col>
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-.state-list-item:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-</style>
-
-
-<script setup>
-import { ref, computed } from 'vue';
+<script setup lang="js">
+import { ref, computed, onMounted } from 'vue';
 import { VRow, VCol, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components';
+import {getAllReagents} from "@/WebClient";
 
-const states = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']);
+const reagents = ref([]);
 const search = ref('');
-const selectedState = ref('');
+const selectedReagent = ref(null);
 const isFocused = ref(false);
 
-const filteredStates = computed(() => {
+const filteredReagents = computed(() => {
   if (!search.value && !isFocused.value) {
     return [];
   }
-  return states.value.filter((state) =>
-    state.toLowerCase().includes(search.value.toLowerCase())
+  return reagents.value.filter((reagent) =>
+    reagent.name.toLowerCase().includes(search.value.toLowerCase())
   );
 });
 
 const shouldShowList = computed(() => isFocused.value);
 
-const selectState = (state) => {
-  selectedState.value = state;
-  search.value = state;
+const selectReagent = (reagent) => {
+  selectedReagent.value = reagent;
+  search.value = reagent.name; // Update search with the selected reagent name
   isFocused.value = false;
 };
+
+// Function to fetch reagents from the API
+const fetchReagents = async () => {
+  try {
+    const response = await getAllReagents(); // Assuming getAllReagents is defined
+    reagents.value = response.data; // Populate the reagents ref with the fetched data
+  } catch (error) {
+    console.error('Error fetching reagents:', error);
+  }
+};
+
+// Fetch reagents when the component is mounted
+onMounted(() => {
+  fetchReagents();
+});
 </script>

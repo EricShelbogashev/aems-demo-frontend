@@ -10,7 +10,7 @@ export interface ReagentData {
 }
 
 export interface ReagentDataResponse {
-  id: number,
+  id: number;
   name: string;
   latexFormula: string;
   molarWeight: number;
