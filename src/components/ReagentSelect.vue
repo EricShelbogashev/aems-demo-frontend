@@ -1,18 +1,19 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" sm="6">
+      <v-col>
         <v-text-field
           v-model="search"
           label="Search Reagents"
           variant="outlined"
           clearable
+          @click:clear="onClear"
           @focus="isFocused = true"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-row v-if="shouldShowList">
-      <v-col cols="12" sm="6">
+      <v-col>
         <v-list>
           <v-list-item
             v-for="reagent in filteredReagents"
@@ -28,13 +29,13 @@
 </template>
 
 <script setup lang="js">
-import { ref, computed, onMounted } from 'vue';
-import { VRow, VCol, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components';
-import { getAllReagents } from "@/WebClient";
+import {ref, computed, onMounted} from 'vue';
+import {VRow, VCol, VTextField, VList, VListItem, VListItemTitle} from 'vuetify/components';
+import {getAllReagents} from "@/WebClient";
 
 const reagents = ref([]);
-const search = ref('');
-const selectedReagent = ref(null);
+let search = ref('');
+let selectedReagent = ref(null);
 const isFocused = ref(false);
 
 const filteredReagents = computed(() => {
@@ -70,4 +71,8 @@ const fetchReagents = async () => {
 onMounted(() => {
   fetchReagents();
 });
+const onClear = () => {
+  search = ref('');
+  selectedReagent = ref(null);
+}
 </script>

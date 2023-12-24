@@ -5,16 +5,34 @@
  */
 
 // Plugins
-import { registerPlugins } from '@/plugins'
+import {registerPlugins} from '@/plugins'
+// //
+// // Components
+// import App from './App.vue'
+// //
+// // Composables
+// import { createApp } from 'vue'
+//
+// const app = createApp(App)
+//
+//
+// app.mount('#app')
+import {createApp} from 'vue';
+import './styles/styles.css'
 
-// Components
-import App from './App.vue'
+import App from './App.vue';
+import {createVuetify} from 'vuetify';
+import 'vuetify/styles';
 
-// Composables
-import { createApp } from 'vue'
-
-const app = createApp(App)
+const vuetify = createVuetify({
+  theme: {
+    // defaultTheme: 'dark',
+  },
+});
+const app = createApp(App);
 
 registerPlugins(app)
 
-app.mount('#app')
+app.use(vuetify);
+
+app.mount('#app');

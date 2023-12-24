@@ -1,15 +1,19 @@
 <template>
-  <v-app>
-    <v-navigation-drawer app permanent>
+  <v-app class="main-container">
+    <v-navigation-drawer
+      class="side-panel"
+      app permanent>
       <v-list dense>
         <v-list-item @click="navigateTo('/')">
           <v-list-item-content>
-            <v-list-item-title>Journals</v-list-item-title>
+            <v-list-item-title
+            class="navigate-title">Journals</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item @click="navigateTo('/reagent-grid')">
           <v-list-item-content>
-            <v-list-item-title>Reagents</v-list-item-title>
+            <v-list-item-title
+            class="navigate-title">Reagents</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -17,18 +21,17 @@
 
     <v-main>
       <v-container fluid>
-        <component :is="defaultComponent" v-bind:journalId="journalId" />
+        <component :is="defaultComponent" v-bind:journalId="journalId"/>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import JournalGrid from '@/components/JournalGrid.vue';
 import ReagentGrid from '@/components/ReagentGrid.vue';
 import JournalEdit from "@/components/JournalEdit.vue";
-import ElementsList from "@/components/ElementList.vue";
 
 export default defineComponent({
   components: {
@@ -50,3 +53,15 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.main-container {
+  background-color: #01090F;
+}
+.side-panel {
+  background-color: #01090F;
+}
+.navigate-title {
+  color: white;
+}
+</style>
