@@ -1,14 +1,13 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import Home from '@/views/Home.vue';
-import ElementDetail from "@/components/ElementDetail.vue";
-import ElementList from "@/components/ElementList.vue";
+import ReagentDetail from "@/components/ReagentDetails.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'JournalGrid',
     component: Home,
-    props: () => ({ defaultComponent: 'JournalGrid' }),
+    props: () => ({defaultComponent: 'JournalGrid'}),
   },
   {
     path: '/edit-journal/:journalId',
@@ -21,22 +20,29 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
+    path: '/journal-details/:journalId',
+    name: 'JournalDetails',
+    component: Home,
+    // Convert the journalId to a number here
+    props: (route) => ({
+      defaultComponent: 'JournalDetails',
+      journalId: parseInt(route.params.journalId as string, 10),
+    }),
+  },
+  {
     path: '/reagent-grid',
     name: 'ReagentGrid',
     component: Home,
-    props: () => ({ defaultComponent: 'ReagentGrid' }),
+    props: () => ({defaultComponent: 'ReagentGrid'}),
   },
   {
-    path: '/element-list',
-    name: 'ElementList',
-    component: ElementList,
-    props: true
-  },
-  {
-    path: '/element-detail',
-    name: 'ElementDetail',
-    component: ElementDetail,
-    props: true
+    path: '/reagent-details/:reagentId',
+    name: 'ReagentDetails',
+    component: Home,
+    props: (route) => ({
+      defaultComponent: 'ReagentDetails',
+      reagentId: parseInt(route.params.reagentId as string, 10),
+    }),
   }
 ];
 
