@@ -17,11 +17,6 @@
           ></v-text-field>
         </v-form>
       </v-card-text>
-      <v-card-actions>
-        <v-btn color="#718F94" @click="saveJournalText">Save title</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn color="#AF5D63" @click="confirmDelete">Delete journal</v-btn>
-      </v-card-actions>
     </v-card>
 
     <v-snackbar
@@ -89,10 +84,17 @@
       </template>
     </v-data-table>
 
-    <div class="add-reagent-usage-block">
-      <v-btn class="add-reagent-usage-button" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
-    </div>
+    <v-card-actions>
+      <div class="add-reagent-usage-block">
+        <v-btn class="add-reagent-usage-button" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
+      </div>
+    </v-card-actions>
 
+    <v-card-actions>
+      <v-btn color="#718F94" @click="saveJournalText">Save journal text</v-btn>
+      <v-spacer></v-spacer>
+      <v-btn color="#AF5D63" @click="confirmDelete">Delete journal</v-btn>
+    </v-card-actions>
 
     <!-- Add Usage Dialog -->
     <v-dialog v-model="showAddUsageDialog" max-width="500px">
@@ -343,8 +345,8 @@ export default {
     async deleteJournalEntryLocal() {
       try {
         await deleteJournalEntry(this.journalId)
-        await this.router.push('/');
         this.showSuccessSnackbar("Journal deleted successfully");
+        await this.router.push('/');
       } catch (error) {
         console.error('Failed to delete journal entry:', error);
         this.showErrorSnackbar("Failed to delete journal entry")
