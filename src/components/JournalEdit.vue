@@ -47,9 +47,9 @@
         <tr style="font-size: 16px; color: white">
           <th>Usage ID</th>
           <th>Reagent ID</th>
-          <th>Journal title</th>
-          <th>Journal creation date</th>
-          <th>Last journal update</th>
+          <th>Usage journal title</th>
+          <th>Usage journal creation date</th>
+          <th>Last usage journal update</th>
           <th>Reason</th>
           <th>Quantity</th>
           <th>Unit</th>

@@ -33,11 +33,13 @@ import JournalGrid from '@/components/JournalGrid.vue';
 import ReagentGrid from '@/components/ReagentGrid.vue';
 import JournalEdit from "@/components/JournalEdit.vue";
 import ReagentDetails from "@/components/ReagentDetails.vue";
+import JournalDetails from "@/components/JournalDetails.vue";
 
 export default defineComponent({
   components: {
     JournalGrid,
     JournalEdit,
+    JournalDetails,
     ReagentGrid,
     ReagentDetails
   },
@@ -59,7 +61,7 @@ export default defineComponent({
 
 <style scoped>
 .main-container {
-  background-color: #01090F;
+  background-color: #02111A;
 }
 .side-panel {
   background-color: #01090F;

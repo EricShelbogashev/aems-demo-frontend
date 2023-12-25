@@ -20,14 +20,21 @@
 
     <v-row>
       <v-col cols="12" sm="6" md="4" v-for="journal in filteredJournals" :key="journal.id">
-        <v-card class="journal-card">
-          <v-card-title class="journal-title">{{ journal.title }}</v-card-title>
-          <v-card-text class="journal-text">
-            <div>Created: {{ formatDate(journal.createdAt) }}</div>
-            <div>Updated: {{ formatDate(journal.updatedAt) }}</div>
-          </v-card-text>
+        <v-card
+          class="journal-card">
+          <v-card
+            class="journal-card"
+            @click="openJournalDetails(journal.id)"
+          >
+            <v-card-title class="journal-title">{{ journal.title }}</v-card-title>
+            <v-card-text class="journal-text">
+              <div>Created: {{ formatDate(journal.createdAt) }}</div>
+              <div>Updated: {{ formatDate(journal.updatedAt) }}</div>
+            </v-card-text>
+          </v-card>
           <v-card-actions>
             <v-btn text="" color="#718F94" @click="openEditDialog(journal)">Edit title</v-btn>
+            <v-spacer></v-spacer>
             <v-btn text="" color="#718F94" @click="editJournal(journal.id)">Edit journal</v-btn>
           </v-card-actions>
         </v-card>
@@ -42,7 +49,8 @@
       <v-card
         class="journal-card">
         <v-card-title
-          class="journal-title">New Journal Entry</v-card-title>
+          class="journal-title">New Journal Entry
+        </v-card-title>
         <v-card-text>
           <v-text-field
             class="edit-title-dialog-name"
@@ -163,6 +171,11 @@ export default {
       this.$router.push({name: 'JournalEdit', params: {journalId}});
     },
 
+    openJournalDetails(journalId) {
+      console.log(journalId);
+      this.$router.push({name: 'JournalDetails', params: {journalId}});
+    },
+
     async fetchJournals() {
       try {
         const response = await getAllJournals();
@@ -186,6 +199,7 @@ export default {
         this.showErrorSnackbar("Failed to create journal");
       }
     },
+
     openEditDialog(journal) {
       this.editedJournalId = journal.id;
       this.editedJournalTitle = journal.title;

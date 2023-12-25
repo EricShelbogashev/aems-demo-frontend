@@ -20,6 +20,16 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
+    path: '/journal-details/:journalId',
+    name: 'JournalDetails',
+    component: Home,
+    // Convert the journalId to a number here
+    props: (route) => ({
+      defaultComponent: 'JournalDetails',
+      journalId: parseInt(route.params.journalId as string, 10),
+    }),
+  },
+  {
     path: '/reagent-grid',
     name: 'ReagentGrid',
     component: Home,
