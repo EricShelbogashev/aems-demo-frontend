@@ -163,10 +163,13 @@ export default {
 
     async fetchJournalInfo() {
       try {
+        this.journalTitle = '';
+        this.jornalUpdatedAt = '';
+        this.jornalCreatedAt = '';
         const response = await getAllJournals();
-        const currentJournal = response.data.find(el => el.id = this.journalId);
+        const currentJournal = response.data.find(el => el.id === this.journalId);
         if (currentJournal === undefined) {
-          console.error('Error fetching journal info:', error);
+          console.error('Error fetching journal info.');
           this.showErrorSnackbar("Failed to fetch journal info. Try again");
           return;
         }

@@ -61,7 +61,7 @@ export default defineComponent({
 
 <style scoped>
 .main-container {
-  background-color: #02111A;
+  background-color: #192126;
 }
 .side-panel {
   background-color: #01090F;

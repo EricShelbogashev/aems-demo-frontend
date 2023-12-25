@@ -204,14 +204,6 @@ export default {
       this.isShowingErrorSnackbar = true;
     },
 
-    goToTarget(reagent) {
-      console.log(reagent)
-      this.$router.push({
-        name: 'ReagentDetail',
-        query: {element: JSON.stringify(reagent)}
-      });
-    },
-
     async fetchReagents() {
       try {
         const response = await getAllReagents();

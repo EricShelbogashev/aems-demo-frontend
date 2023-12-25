@@ -53,12 +53,17 @@
               v-model="hazardCategoryValue"/>
           </div>
         </div>
-        <v-btn
-          color="#718F94"
-          width="100%"
-          @click="updateReagent">
-          Save
-        </v-btn>
+        <v-card-actions>
+          <!--          <v-btn color="#AF5D63" @click="confirmDelete">Delete reagent</v-btn>-->
+          <v-spacer></v-spacer>
+          <v-btn
+            color="#718F94"
+            width="100%"
+            @click="updateReagent">
+            Save
+          </v-btn>
+        </v-card-actions>
+
       </v-col>
       <v-col>
         <v-row v-for="usage in usages" :key="usage.usageId">
@@ -101,7 +106,7 @@
 
 
 <script>
-import {getAllReagents, getReagentUsageStats, updateReagent} from "@/WebClient";
+import {deleteJournalEntry, deleteReagent, getAllReagents, getReagentUsageStats, updateReagent} from "@/WebClient";
 import {ref} from "vue";
 
 export default {
@@ -132,31 +137,30 @@ export default {
     };
   },
 
-  // async created() {
-  // if (this.$route.query.element) {
-  //   try {
-  //     this.elementData = JSON.parse(this.$route.query.element);
-  //     this.nameValue = this.elementData.name;
-  //     this.descriptionValue = this.elementData.description;
-  //     this.formulaValue = this.elementData.latexFormula;
-  //     this.molarWeightValue = this.elementData.molarWeight;
-  //     this.hazardCategoryValue = this.elementData.hazardCategory
-  //   } catch (e) {
-  //     console.error('Ошибка при десериализации', e);
-  //   }
-  // }
-  // },
-
   async created() {
     await this.fetchReagentInfo();
   },
 
   async mounted() {
-    // console.log("Mounted")
     await this.fetchReagentInfo();
   },
 
   methods: {
+    async confirmDelete() {
+      if (confirm('Are you sure you want to delete this reagent?')) {
+        await this.deleteReagent();
+      }
+    },
+    async deleteReagent() {
+      try {
+        await deleteReagent(this.reagentId)
+        this.showSuccessSnackbar("Reagent deleted successfully");
+        await this.router.push('/');
+      } catch (error) {
+        console.error('Failed to delete reagent:', error);
+        this.showErrorSnackbar("Failed to delete reagent")
+      }
+    },
     showSuccessSnackbar(message) {
       this.snackbarMessage = message;
       this.isShowingSuccessSnackbar = true;
@@ -242,13 +246,6 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-  //display: flex;
-  //justify-content: space-between;
-  //padding: 20px;
-  background-color: #01090F;
-}
-
 .reagent-title {
   color: white;
 }

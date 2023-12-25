@@ -41,7 +41,7 @@
       </v-col>
     </v-row>
 
-    <!-- Диало для создания журнала   -->
+    <!-- Диалог для создания журнала   -->
     <v-dialog
       v-model="dialog"
       persistent=""
@@ -52,12 +52,16 @@
           class="journal-title">New Journal Entry
         </v-card-title>
         <v-card-text>
-          <v-text-field
-            class="edit-title-dialog-name"
-            v-model="newJournalTitle"
-            label="Journal Title"
-            variant="outlined"
-            required></v-text-field>
+          <v-form
+            ref="create_journal">
+            <v-text-field
+              class="edit-title-dialog-name"
+              v-model="newJournalTitle"
+              label="Journal Title"
+              variant="outlined"
+              required
+            ></v-text-field>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -77,12 +81,15 @@
       class="edit-title-dialog">
       <v-card-title class="headline" style="color: white">Edit Journal Entry</v-card-title>
       <v-card-text>
-        <v-text-field
-          class="edit-title-dialog-name"
-          variant="outlined"
-          v-model="editedJournalTitle"
-          label="Journal Title"
-          required></v-text-field>
+        <v-form
+          ref="edit_journal">
+          <v-text-field
+            class="edit-title-dialog-name"
+            variant="outlined"
+            v-model="editedJournalTitle"
+            label="Journal Title"
+            required></v-text-field>
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -115,18 +122,24 @@
 <script>
 
 import {createJournalEntry, getAllJournals, updateJournalEntry} from "@/WebClient";
+import {ref} from "vue";
 
 export default {
   name: 'JournalGrid',
   data() {
     return {
+      rules: {
+        required: v => !!v || 'Field is required',
+        lengthCheck: v => (v && v.length <= 256) || 'Field must not exceed 256 characters',
+        positiveIntegerCheck: v => !isNaN(parseFloat(v)) && isFinite(v) && v > 0 || 'The value must be a positive number'
+      },
       searchQuery: '',
       journals: [],
       dialog: false,
-      newJournalTitle: '',
+      newJournalTitle: ref(''),
       editDialog: false,
       editedJournalId: null,
-      editedJournalTitle: '',
+      editedJournalTitle: ref(''),
       snackbarMessage: '',
       isShowingSuccessSnackbar: false,
       isShowingErrorSnackbar: false
@@ -187,7 +200,11 @@ export default {
     },
 
     async createJournal() {
-      if (!this.newJournalTitle) return;
+      // if (!this.newJournalTitle) return;
+      // const isValid = (await this.$refs["create_journal"].validate()).valid;
+      // console.log(isValid);
+      // console.log(this.newJournalTitle);
+      // if (isValid) {
       try {
         await createJournalEntry(this.newJournalTitle);
         this.newJournalTitle = '';
@@ -198,6 +215,7 @@ export default {
         console.error('Error creating journal:', error);
         this.showErrorSnackbar("Failed to create journal");
       }
+      // }
     },
 
     openEditDialog(journal) {
@@ -208,6 +226,8 @@ export default {
 
     async updateJournal() {
       if (!this.editedJournalTitle) return;
+      // const isValid = (await this.$refs.edit_journal.validate()).valid;
+      // if (isValid) {
       try {
         await updateJournalEntry(this.editedJournalId, this.editedJournalTitle);
         this.editDialog = false;
@@ -217,6 +237,7 @@ export default {
         console.error('Error updating journal entry:', error);
         this.showErrorSnackbar("Failed to update journal");
       }
+      // }
     },
   },
 };
