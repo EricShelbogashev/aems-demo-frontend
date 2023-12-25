@@ -41,36 +41,48 @@
 
     <!-- Диалог для создания нового реагента -->
     <v-dialog v-model="reagentDialog" persistent="" max-width="600px">
-      <v-card>
-        <v-card-title class="headline">New Reagent</v-card-title>
+      <v-card
+      class="reagent-card">
+        <v-card-title
+          class="reagent-title">New Reagent</v-card-title>
         <v-card-text>
           <v-form
             ref="form">
             <v-text-field
               ref="reagentName"
+              class="text-field-dialog"
+              variant="outlined"
               v-model="newReagentData.name"
               label="Name"
               :rules="[rules.required, rules.lengthCheck]"
               required></v-text-field>
             <v-text-field
               ref="reagentFormula"
+              class="text-field-dialog"
+              variant="outlined"
               v-model="newReagentData.latexFormula"
               label="Formula"
               :rules="[rules.required, rules.lengthCheck]"
               required></v-text-field>
             <v-text-field
               ref="reagentMolarWeight"
+              class="text-field-dialog"
+              variant="outlined"
               v-model="newReagentData.molarWeight"
               label="Molar Weight"
               :rules="[rules.required, rules.positiveIntegerCheck, rules.lengthCheck]"
               type="number"></v-text-field>
             <v-text-field
               ref="reagentDescription"
+              class="text-field-dialog"
+              variant="outlined"
               v-model="newReagentData.description"
               label="Description"
               required></v-text-field>
             <v-text-field
               ref="reagentHazardCategory"
+              class="text-field-dialog"
+              variant="outlined"
               v-model="newReagentData.hazardCategory"
               label="Hazard Category"
               :rules="[rules.required, rules.lengthCheck]"
@@ -273,5 +285,10 @@ export default {
   width: 100%;
   display: flex;
   align-items: stretch;
+}
+
+.text-field-dialog {
+  color: white;
+  width: 100%;
 }
 </style>

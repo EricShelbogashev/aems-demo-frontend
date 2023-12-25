@@ -35,11 +35,21 @@
     </v-row>
 
     <!-- Диало для создания журнала   -->
-    <v-dialog v-model="dialog" persistent="" max-width="600px">
-      <v-card>
-        <v-card-title class="headline">New Journal Entry</v-card-title>
+    <v-dialog
+      v-model="dialog"
+      persistent=""
+      max-width="600px">
+      <v-card
+        class="journal-card">
+        <v-card-title
+          class="journal-title">New Journal Entry</v-card-title>
         <v-card-text>
-          <v-text-field v-model="newJournalTitle" label="Journal Title" required></v-text-field>
+          <v-text-field
+            class="edit-title-dialog-name"
+            v-model="newJournalTitle"
+            label="Journal Title"
+            variant="outlined"
+            required></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -200,7 +210,6 @@ export default {
 
 <style scoped>
 .main-container {
-  //background-color: #031927;
 }
 
 .edit-title-dialog {
