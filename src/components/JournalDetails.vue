@@ -196,46 +196,6 @@ export default {
 </script>
 
 <style scoped>
-.edit-journal-title {
-  color: white;
-}
-
-.edit-journal-card {
-  background-color: #141616;
-}
-
-.edit-journal-text-field {
-  color: white;
-  height: 57px;
-  border-radius: 4%;
-  margin: 30px 15px;
-}
-
-.edit-journal-select-field {
-  color: white;
-  margin: 30px 15px;
-  height: 57px;
-}
-
-.add-reagent-usage-button {
-  background-color: #718F94;
-  color: white;
-  width: 100%;
-}
-
-.add-reagent-usage-block {
-  background-color: #01090F;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.add-usage-fields {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
 .journal-title {
   color: white;
 }

@@ -3,7 +3,7 @@
     <v-card class="edit-journal-card">
       <v-card-title
         class="edit-journal-title"
-      >Edit Journal
+      >Edit journal text
       </v-card-title>
       <v-card-text>
         <v-form
@@ -16,6 +16,9 @@
             :rules="[rules.required]"
           ></v-text-field>
         </v-form>
+        <v-card-actions>
+          <v-btn color="#718F94" @click="saveJournalText">Save journal text</v-btn>
+        </v-card-actions>
       </v-card-text>
     </v-card>
 
@@ -38,60 +41,67 @@
       </div>
     </v-snackbar>
 
+
     <!-- New table for displaying usages -->
-    <v-data-table
-      style="background-color: #141616; color: white"
-      :items="usages"
-      class="elevation-1">
-      <template v-slot:headers>
-        <tr style="font-size: 16px; color: white">
-          <th>Usage ID</th>
-          <th>Reagent ID</th>
-          <th>Usage journal title</th>
-          <th>Usage journal creation date</th>
-          <th>Last usage journal update</th>
-          <th>Reason</th>
-          <th>Quantity</th>
-          <th>Unit</th>
-          <th>Date of use</th>
-        </tr>
-      </template>
+    <v-card class="edit-journal-card">
+      <v-row>
+        <h1 class="edit-journal-title">
+          Usages
+        </h1>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-btn class="add-reagent-usage-button" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
+        </v-card-actions>
+      </v-row>
 
-      <template v-slot:item="slotProps">
-        <tr style="color: lightgray">
-          <td>{{ slotProps.item.usageId }}</td>
-          <td>{{ slotProps.item.reagentId }}</td>
-          <td>{{
-              slotProps.item.journalEntryResponseDto ? slotProps.item.journalEntryResponseDto.title : ''
-            }}
-          </td>
-          <td>{{
-              slotProps.item.journalEntryResponseDto ? formatDate(slotProps.item.journalEntryResponseDto.createdAt) : ''
-            }}
-          </td>
-          <td>{{
-              slotProps.item.journalEntryResponseDto ? formatDate(slotProps.item.journalEntryResponseDto.updatedAt) : ''
-            }}
-          </td>
-          <td>{{ slotProps.item.reason }}</td>
-          <td>{{ slotProps.item.quantity }}</td>
-          <td>{{ slotProps.item.unit }}</td>
-          <td>{{ formatDate(slotProps.item.createdAt) }}</td>
-          <td>
-            <v-btn color="#AF5D63" @click="deleteUsageEntry(slotProps.item.usageId)">Delete</v-btn>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
+
+      <v-data-table
+        style="background-color: #141616; color: white"
+        :items="usages"
+        class="elevation-1">
+        <template v-slot:headers>
+          <tr style="font-size: 16px; color: white">
+            <th>Usage ID</th>
+            <th>Reagent ID</th>
+            <th>Usage journal title</th>
+            <th>Usage journal creation date</th>
+            <th>Last usage journal update</th>
+            <th>Reason</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Date of use</th>
+          </tr>
+        </template>
+
+        <template v-slot:item="slotProps">
+          <tr style="color: lightgray">
+            <td>{{ slotProps.item.usageId }}</td>
+            <td>{{ slotProps.item.reagentId }}</td>
+            <td>{{
+                slotProps.item.journalEntryResponseDto ? slotProps.item.journalEntryResponseDto.title : ''
+              }}
+            </td>
+            <td>{{
+                slotProps.item.journalEntryResponseDto ? formatDate(slotProps.item.journalEntryResponseDto.createdAt) : ''
+              }}
+            </td>
+            <td>{{
+                slotProps.item.journalEntryResponseDto ? formatDate(slotProps.item.journalEntryResponseDto.updatedAt) : ''
+              }}
+            </td>
+            <td>{{ slotProps.item.reason }}</td>
+            <td>{{ slotProps.item.quantity }}</td>
+            <td>{{ slotProps.item.unit }}</td>
+            <td>{{ formatDate(slotProps.item.createdAt) }}</td>
+            <td>
+              <v-btn color="#AF5D63" @click="deleteUsageEntry(slotProps.item.usageId)">Delete</v-btn>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+    </v-card>
 
     <v-card-actions>
-      <div class="add-reagent-usage-block">
-        <v-btn class="add-reagent-usage-button" @click="showAddUsageDialog = true">Add Reagent Usage</v-btn>
-      </div>
-    </v-card-actions>
-
-    <v-card-actions>
-      <v-btn color="#718F94" @click="saveJournalText">Save journal text</v-btn>
       <v-spacer></v-spacer>
       <v-btn color="#AF5D63" @click="confirmDelete">Delete journal</v-btn>
     </v-card-actions>
@@ -373,10 +383,12 @@ export default {
 <style scoped>
 .edit-journal-title {
   color: white;
+  margin: 25px;
 }
 
 .edit-journal-card {
   background-color: #141616;
+  margin: 20px;
 }
 
 .edit-journal-text-field {
@@ -393,16 +405,8 @@ export default {
 }
 
 .add-reagent-usage-button {
-  background-color: #718F94;
-  color: white;
-  width: 100%;
-}
-
-.add-reagent-usage-block {
-  background-color: #01090F;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  color: #718F94;
+  margin: 20px;
 }
 
 .add-usage-fields {
