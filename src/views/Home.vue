@@ -68,5 +68,6 @@ export default defineComponent({
 }
 .navigate-title {
   color: white;
+  font-size: 20px;
 }
 </style>
