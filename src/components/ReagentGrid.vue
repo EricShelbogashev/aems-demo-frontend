@@ -22,7 +22,7 @@
       <v-col cols="12" sm="6" md="4" v-for="reagent in filteredReagents" :key="reagent.id">
         <v-card
           class="reagent-card"
-          @click="goToTarget(reagent)">
+          @click="openReagentDetails(reagent.id)">
           <v-card-title class="reagent-title"
           >{{ reagent.name }}
           </v-card-title>
@@ -156,6 +156,10 @@ export default {
   },
 
   methods: {
+    openReagentDetails(reagentId) {
+      this.$router.push({name: 'ReagentDetails', params: {reagentId}});
+    },
+
     renderedLatexFormula(id) {
       let reagent = this.reagents.filter(reagent => reagent.id === id).at(0)
       if (reagent != null) {
@@ -235,7 +239,6 @@ export default {
 
 <style scoped>
 .main-container {
-  //background-color: #031927;
 }
 
 .reagent-card {

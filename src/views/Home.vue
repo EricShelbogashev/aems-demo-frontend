@@ -32,12 +32,14 @@ import {defineComponent} from 'vue';
 import JournalGrid from '@/components/JournalGrid.vue';
 import ReagentGrid from '@/components/ReagentGrid.vue';
 import JournalEdit from "@/components/JournalEdit.vue";
+import ReagentDetails from "@/components/ReagentDetails.vue";
 
 export default defineComponent({
   components: {
     JournalGrid,
     JournalEdit,
     ReagentGrid,
+    ReagentDetails
   },
   props: {
     defaultComponent: {
@@ -45,6 +47,7 @@ export default defineComponent({
       required: true,
     },
     journalId: Number,
+    reagentId: Number
   },
   methods: {
     navigateTo(path: string) {

@@ -159,6 +159,7 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
       rules: {
@@ -226,10 +227,16 @@ export default {
         ]
     }
   },
+
   async mounted() {
     await this.fetchJournalContent();
     await this.fetchReagents();
   },
+
+  async created() {
+    console.log("CREATED:" + this.journalId);
+  },
+
   methods: {
     formatDate(dateString) {
       const dateObject = new Date(dateString);
@@ -295,12 +302,12 @@ export default {
           await addReagentUsageEntry(this.journalId, usageData);
           this.showAddUsageDialog = false;
           await this.fetchJournalContent();
-          await (this.newUsage = ref({
+          this.newUsage = ref({
             reagentId: -1,
             reason: '',
             quantity: null,
             unit: ''
-          }));
+          });
           this.showSuccessSnackbar("New reagent usage added successfully");
         } catch (error) {
           if (error instanceof Error) {
@@ -335,7 +342,7 @@ export default {
     // Delete the journal entry
     async deleteJournalEntryLocal() {
       try {
-        await deleteJournalEntry(props.journalId)
+        await deleteJournalEntry(this.journalId)
         await this.router.push('/');
         this.showSuccessSnackbar("Journal deleted successfully");
       } catch (error) {
@@ -371,7 +378,6 @@ export default {
 }
 
 .edit-journal-text-field {
-  //background-color: #252626;
   color: white;
   height: 57px;
   border-radius: 4%;
@@ -387,10 +393,6 @@ export default {
 .add-reagent-usage-button {
   background-color: #718F94;
   color: white;
-  align-self: center;
-  align-content: center;
-  alignment-baseline: center;
-  align-items: center;
   width: 100%;
 }
 
@@ -404,7 +406,6 @@ export default {
 .add-usage-fields {
   display: flex;
   flex-direction: column;
-  //padding: 16px;
   width: 100%;
 }
 </style>

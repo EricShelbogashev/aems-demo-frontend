@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import Home from '@/views/Home.vue';
-import ReagentDetail from "@/components/ReagentDetail.vue";
+import ReagentDetail from "@/components/ReagentDetails.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,10 +26,13 @@ const routes: Array<RouteRecordRaw> = [
     props: () => ({defaultComponent: 'ReagentGrid'}),
   },
   {
-    path: '/reagent-detail',
-    name: 'ReagentDetail',
-    component: ReagentDetail,
-    props: () => ({defaultComponent: 'ReagentDetail'}),
+    path: '/reagent-details/:reagentId',
+    name: 'ReagentDetails',
+    component: Home,
+    props: (route) => ({
+      defaultComponent: 'ReagentDetails',
+      reagentId: parseInt(route.params.reagentId as string, 10),
+    }),
   }
 ];
 
